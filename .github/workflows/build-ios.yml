@@ -74,10 +74,10 @@ jobs:
 
       # build_ios.sh 内部会完成 npx cap sync ios + pod install + xcodebuild
       - name: Build iOS Simulator .app (no signing)
-        run: ./build_ios.sh --simulator --configuration Debug
+        run: bash build_ios.sh --simulator --configuration Debug
 
       - name: Build unsigned IPA (for re-sign / sideload)
-        run: ./build_ios.sh --ipa --no-codesign
+        run: bash build_ios.sh --ipa --no-codesign
 
       - name: Zip simulator app for artifact
         run: |
