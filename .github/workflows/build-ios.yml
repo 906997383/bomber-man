@@ -44,6 +44,12 @@ jobs:
     env:
       BUNDLE_ID: com.trae.bomberman
       EXPORT_METHOD: ${{ github.event.inputs.export_method || 'development' }}
+      # secrets 不能在 if: 里直接引用，先映射到 env，再用 env.X != '' 判断
+      SEC_CERT_B64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+      SEC_P12_PASS: ${{ secrets.P12_PASSWORD }}
+      SEC_PROFILE_B64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
+      SEC_TEAM_ID: ${{ secrets.TEAM_ID }}
+      KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD || 'ci-temp-keychain' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -94,15 +100,13 @@ jobs:
       #   PROVISIONING_PROFILE_BASE64 .mobileprovision 的 base64
       #   TEAM_ID                     10 位开发者团队 ID
       - name: Build signed IPA
-        if: ${{ secrets.BUILD_CERTIFICATE_BASE64 != '' && secrets.P12_PASSWORD != '' && secrets.PROVISIONING_PROFILE_BASE64 != '' && secrets.TEAM_ID != '' }}
-        env:
-          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
-          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
-          PROVISIONING_PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
-          TEAM_ID: ${{ secrets.TEAM_ID }}
-          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD || 'ci-temp-keychain' }}
+        if: ${{ env.SEC_CERT_B64 != '' && env.SEC_P12_PASS != '' && env.SEC_PROFILE_B64 != '' && env.SEC_TEAM_ID != '' }}
         run: |
           set -euo pipefail
+          BUILD_CERTIFICATE_BASE64="$SEC_CERT_B64"
+          P12_PASSWORD="$SEC_P12_PASS"
+          PROVISIONING_PROFILE_BASE64="$SEC_PROFILE_B64"
+          TEAM_ID="$SEC_TEAM_ID"
           WORKSPACE="ios/App/App.xcworkspace"
           SCHEME="App"
           ARCHIVE="dist/BomberMan.xcarchive"
@@ -181,7 +185,7 @@ jobs:
           echo "signed IPA: dist/BomberMan.ipa"
 
       - name: Upload signed IPA
-        if: ${{ secrets.BUILD_CERTIFICATE_BASE64 != '' && secrets.P12_PASSWORD != '' && secrets.PROVISIONING_PROFILE_BASE64 != '' && secrets.TEAM_ID != '' }}
+        if: ${{ env.SEC_CERT_B64 != '' && env.SEC_P12_PASS != '' && env.SEC_PROFILE_B64 != '' && env.SEC_TEAM_ID != '' }}
         uses: actions/upload-artifact@v4
         with:
           name: ios-signed-ipa
