@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>BOMBER MAN</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Bomber Man">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#000000">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<link rel="icon" type="image/png" href="assets/icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <div id="screenWrap">
+    <canvas id="screen" width="256" height="240"></canvas>
+  </div>
+  <div id="pad">
+    <div id="joystickZone" aria-label="方向摇杆"></div>
+    <div id="joyBase"></div>
+    <div id="joyKnob"></div>
+    <button id="bombBtn" class="btn bomb" data-key="bomb" aria-label="放炸弹">
+      <span>BOMB</span>
+    </button>
+  </div>
+</div>
+<script src="js/chr.js"></script>
+<script src="js/title.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>

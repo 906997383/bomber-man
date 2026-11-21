@@ -1,0 +1,15 @@
+{
+  "name": "Bomber Man",
+  "short_name": "BomberMan",
+  "description": "Bomber Man - classic arcade bombing action for Android and iOS.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

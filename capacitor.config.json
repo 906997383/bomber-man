@@ -1,0 +1,16 @@
+{
+  "appId": "com.trae.bomberman",
+  "appName": "Bomber Man",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "backgroundColor": "#000000",
+    "allowMixedContent": false
+  },
+  "ios": {
+    "backgroundColor": "#000000",
+    "contentInset": "always"
+  }
+}
